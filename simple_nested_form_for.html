@@ -1,0 +1,82 @@
+<p><head>
+<link rel="stylesheet" type="text/css" href="github-styles.css">
+</head>
+<body></p>
+
+<h1>simple nested form for</h1>
+
+<h1>dependencies</h1>
+
+<h2>nested_form-0.3.2</h2>
+
+<ul>
+<li>bundler (>= 0, development)</li>
+<li>capybara (~> 1.1, development)</li>
+<li>mocha (>= 0, development)</li>
+<li>rake (>= 0, development)</li>
+<li>rspec-rails (~> 2.6, development)</li>
+</ul>
+
+<h1>setup</h1>
+
+<p><code>Gemfile: gem 'nested-form'</code></p>
+
+<h1>complete example</h1>
+
+<pre><code>&lt;%= simple_nested_form_for @zone, html: { class: 'form-horizontal' },
+
+wrapper: :horizontal_form,
+wrapper_mappings: {
+  check_boxes:   :horizontal_radio_and_checkboxes,
+  radio_buttons: :horizontal_radio_and_checkboxes,
+  file: :horizontal_file_input,
+  boolean: :horizontal_boolean
+} do |f| %&gt;
+
+ &lt;%= f.error_notification %&gt;
+
+&lt;%= f.input :name, :placeholder =&gt; 'Name' %&gt;
+&lt;%= f.fields_for :polygons do |builder| %&gt;
+  &lt;%= render "polygon_fields", :f =&gt; builder %&gt;
+  &lt;%= builder.link_to_remove "Remove" %&gt;
+&lt;% end %&gt;
+&lt;%= f.link_to_add "Add a segment", :polygons %&gt;
+
+&lt;div class="actions"&gt;
+  &lt;%= f.submit %&gt;
+&lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<h1>details</h1>
+
+<p><code>
+class Polygon &lt; ActiveRecord::Base
+    belongs_to :zone
+end
+</code>
+<code>
+class Zone &lt; ActiveRecord::Base
+    has_many :polygons
+end
+</code></p>
+
+<h2>sets up a "Remove" link</h2>
+
+<p><code>
+&lt;%= builder.link_to_remove "Remove" %&gt;
+</code></p>
+
+<h2>sets up a "Add" link</h2>
+
+<p><code>
+&lt;%= f.link_to_add "Add a segment", :polygons %&gt;
+</code></p>
+
+<p><code>
+&lt;%= f.input_field :json_points %&gt;
+</code></p>
+
+<h1>tips and tricks</h1>
+
+<p></body></p>
